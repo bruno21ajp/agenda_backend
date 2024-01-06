@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="/assets/blue.ico" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+        <h1>Agenda</h1>
+
+        <form @submit.prevent="addContact">
+            <input type="text" placeholder="Nome" v-model="newContact.name" required>
+            <input type="email" placeholder="Email" v-model="newContact.email" required>
+            <input type="tel" placeholder="Telefone" v-model="newContact.phone" required>
+            <button type="submit">Adicionar Contato</button>
+        </form>
+
+        <ul>
+            <li v-for="(contact, index) in contacts" :key="index">
+                <span>{{ contact.name }}</span>
+                <span>{{ contact.email }}</span>
+                <span>{{ contact.phone }}</span>
+                <button @click="editContact(index)">Editar</button>
+                <button @click="deleteContact(index)">Excluir</button>
+            </li>
+        </ul>
+
+        <div v-if="editMode">
+            <h2>Editar Contato</h2>
+            <form @submit.prevent="updateContact">
+                <input type="text" v-model="editedContact.name" required>
+                <input type="email" v-model="editedContact.email" required>
+                <input type="tel" v-model="editedContact.phone" required>
+                <button type="submit">Salvar</button>
+                <button @click="cancelEdit">Cancelar</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+
+</body>
+
+</html>
